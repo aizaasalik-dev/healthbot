@@ -60,7 +60,7 @@ export function ProfileModal({ mode, onClose }: Props) {
       }
     >
       <Field label="Full Name">
-        <Input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Aiza Salik" />
+        <Input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Your Name" />
       </Field>
 
       {!isEdit && (

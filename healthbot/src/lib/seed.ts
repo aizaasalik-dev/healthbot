@@ -1,7 +1,7 @@
 import type { FamilyMember, Report, Prescription, MRNumber, AppStore } from '@/types'
 
 export const DEFAULT_MAIN_MEMBER: FamilyMember = {
-  profile: { name: 'Aiza Salik', dob: '2001-04-13', gender: 'Female', blood: 'B+', phone: '' },
+  profile: { name: 'Your Name', dob: '', gender: '', blood: '', phone: '' },
   vitals: { bp: '118/76', pulse: '72', weight: '54' },
   events: [
     {
@@ -35,7 +35,7 @@ export const DEFAULT_MAIN_MEMBER: FamilyMember = {
 }
 
 export const DEFAULT_ABBU_MEMBER: FamilyMember = {
-  profile: { name: 'Abbu (Tariq Salik)', dob: '1965-07-10', gender: 'Male', blood: 'O+', phone: '' },
+  profile: { name: 'Family Member 1', dob: '', gender: '', blood: '', phone: '' },
   vitals: { bp: '145/92', pulse: '78', weight: '78' },
   events: [
     {
@@ -53,7 +53,7 @@ export const DEFAULT_ABBU_MEMBER: FamilyMember = {
 }
 
 export const DEFAULT_AMI_MEMBER: FamilyMember = {
-  profile: { name: 'Ami ji (Sabina Salik)', dob: '1968-03-25', gender: 'Female', blood: 'A+', phone: '' },
+  profile: { name: 'Family Member 2', dob: '', gender: '', blood: '', phone: '' },
   vitals: { bp: '122/80', pulse: '68', weight: '62' },
   events: [
     {

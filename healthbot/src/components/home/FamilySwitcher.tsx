@@ -8,6 +8,14 @@ interface Props {
   onAddMember: () => void
 }
 
+function getChipLabel(key: string, fullName: string): string {
+  if (key === 'main') return 'Me'
+  const clean = fullName.trim()
+  const neutralMatch = clean.match(/^Family Member\s*(\d+)$/i)
+  if (neutralMatch) return `Member ${neutralMatch[1]}`
+  return clean.split(/\s+/)[0] || 'Member'
+}
+
 export function FamilySwitcher({ onAddMember }: Props) {
   const activeFam = useStore(s => s.activeFam)
   const families = useStore(s => s.families)
@@ -17,8 +25,7 @@ export function FamilySwitcher({ onAddMember }: Props) {
     <div className="frow">
       {Object.entries(families).map(([key, fam]) => {
         const inits = initials(fam.profile.name)
-        const firstWord = fam.profile.name.trim().split(/\s+/)[0] || 'Member'
-        const label = key === 'main' ? 'Me' : firstWord
+        const label = getChipLabel(key, fam.profile.name)
         const colorClass = getFamilyColor(key)
         return (
           <div key={key} className="fchip" onClick={() => setActiveFam(key)}>

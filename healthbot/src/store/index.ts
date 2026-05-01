@@ -191,7 +191,8 @@ export const useStore = create<Store>()(
         get().mrNumbers.filter(m => m.patient === famKey),
     }),
     {
-      name: 'healthbot-v3',
+      // Bump storage key to reset previously cached personalized demo data.
+      name: 'healthbot-v4',
       version: 1,
       migrate: (persistedState: any) => {
         if (!persistedState || typeof persistedState !== 'object') return persistedState

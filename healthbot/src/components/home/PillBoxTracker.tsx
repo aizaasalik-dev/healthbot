@@ -4,6 +4,7 @@ import { useStore } from '@/store'
 import { useMedSlots } from '@/hooks/useMedSlots'
 import type { Medicine } from '@/types'
 import clsx from 'clsx'
+import { todayKey } from '@/lib/utils'
 
 type Slot = 'morning' | 'afternoon' | 'night'
 
@@ -16,11 +17,15 @@ interface PillBoxProps {
 
 function PillBox({ slot, emoji, label, meds }: PillBoxProps) {
   const activeFam = useStore(s => s.activeFam)
-  const isMedTaken = useStore(s => s.isMedTaken)
   const toggleMedDose = useStore(s => s.toggleMedDose)
+  const medDosesTaken = useStore(s => s.medDosesTaken)
 
   const isEmpty = meds.length === 0
-  const takenCount = meds.filter(m => isMedTaken(activeFam, slot, m.name)).length
+  const dayKey = todayKey()
+  const takenCount = meds.filter(m => {
+    const key = `${activeFam}:${dayKey}:${slot}:${m.name.toLowerCase()}`
+    return medDosesTaken[key] === true
+  }).length
   const allTaken = !isEmpty && takenCount === meds.length
   const partial = takenCount > 0 && takenCount < meds.length
 
@@ -33,10 +38,10 @@ function PillBox({ slot, emoji, label, meds }: PillBoxProps) {
 
   function handleClick() {
     if (isEmpty) return
+    const shouldTake = !allTaken
     meds.forEach(m => {
-      const shouldTake = !allTaken
-      const key = `${activeFam}:${slot}:${m.name}`
-      if (isMedTaken(activeFam, slot, m.name) !== shouldTake) {
+      const key = `${activeFam}:${dayKey}:${slot}:${m.name.toLowerCase()}`
+      if ((medDosesTaken[key] === true) !== shouldTake) {
         toggleMedDose(activeFam, slot, m.name)
       }
     })

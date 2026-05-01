@@ -23,6 +23,8 @@ interface Actions {
   // Medicine doses
   toggleMedDose: (famKey: string, slot: string, medName: string) => void
   isMedTaken: (famKey: string, slot: string, medName: string) => boolean
+  setMedicineReminder: (famKey: string, medName: string, time: string) => void
+  toggleMedicineReminder: (famKey: string, medName: string, enabled: boolean) => void
 
   // Reports
   addReport: (report: Omit<Report, 'id'>) => void
@@ -119,6 +121,32 @@ export const useStore = create<Store>()(
         return get().medDosesTaken[key] === true
       },
 
+      setMedicineReminder: (famKey, medName, time) => {
+        const key = `${famKey}:${medName.toLowerCase()}`
+        set(s => ({
+          medReminders: {
+            ...s.medReminders,
+            [key]: {
+              enabled: s.medReminders[key]?.enabled ?? true,
+              time,
+            },
+          },
+        }))
+      },
+
+      toggleMedicineReminder: (famKey, medName, enabled) => {
+        const key = `${famKey}:${medName.toLowerCase()}`
+        set(s => ({
+          medReminders: {
+            ...s.medReminders,
+            [key]: {
+              enabled,
+              time: s.medReminders[key]?.time ?? '08:00',
+            },
+          },
+        }))
+      },
+
       // ── Reports ─────────────────────────────────────────────
       addReport: (report) =>
         set(s => ({ reports: [{ ...report, id: uid() }, ...s.reports] })),
@@ -160,6 +188,7 @@ export const useStore = create<Store>()(
         prescriptions: s.prescriptions,
         mrNumbers: s.mrNumbers,
         medDosesTaken: s.medDosesTaken,
+        medReminders: s.medReminders,
         apiKey: s.apiKey,
       }),
     }

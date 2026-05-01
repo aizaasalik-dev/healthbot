@@ -42,7 +42,6 @@ export function HomePage({ navigate, openAdd }: PageProps) {
       <ProfileHeader
         profile={famData.profile}
         vitals={famData.vitals}
-        isMe={activeFam === 'main'}
         onEdit={handleEditProfile}
         onNotif={() => navigate('export')}
       />

@@ -92,6 +92,14 @@ export interface MRNumber {
 export type MedDosesTaken = Record<string, boolean>
 // key format: `${famKey}:${YYYY-MM-DD}:${slot}:${medNameLower}`
 
+export interface MedicineReminder {
+  enabled: boolean
+  time: string // HH:mm
+}
+
+export type MedicineReminders = Record<string, MedicineReminder>
+// key format: `${famKey}:${medNameLower}`
+
 // ── Store shape ────────────────────────────────────────────────
 export interface AppStore {
   // Families map — 'main' always exists
@@ -100,6 +108,7 @@ export interface AppStore {
   prescriptions: Prescription[]
   mrNumbers: MRNumber[]
   medDosesTaken: MedDosesTaken
+  medReminders: MedicineReminders
   // Active family key
   activeFam: string
   // API key (stored to localStorage separately)

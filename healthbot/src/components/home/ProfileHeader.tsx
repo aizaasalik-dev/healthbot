@@ -2,12 +2,10 @@
 
 import { calcAge, fmtLong, initials } from '@/lib/utils'
 import type { FamilyProfile } from '@/types'
-import type { Page } from '@/types'
 
 interface Props {
   profile: FamilyProfile
   vitals: { bp: string; pulse: string; weight: string }
-  isMe: boolean
   onEdit: () => void
   onNotif: () => void
 }
@@ -44,7 +42,7 @@ function IconBtn({ id, icon, label, onClick }: { id?: string; icon: string; labe
   )
 }
 
-export function ProfileHeader({ profile, isMe, onEdit, onNotif }: Props) {
+export function ProfileHeader({ profile, onEdit, onNotif }: Props) {
   const age = calcAge(profile.dob)
   const dobFmt = fmtLong(profile.dob)
   const gIcon = profile.gender === 'Male' ? '♂' : profile.gender === 'Female' ? '♀' : '⚧'
@@ -59,7 +57,7 @@ export function ProfileHeader({ profile, isMe, onEdit, onNotif }: Props) {
         </span>
         <div style={{ display: 'flex', gap: 8 }}>
           <IconBtn icon="🔔" label="Notifications" onClick={onNotif} />
-          {isMe && <IconBtn icon="✏️" label="Edit Profile" onClick={onEdit} />}
+          <IconBtn icon="✏️" label="Edit Profile" onClick={onEdit} />
         </div>
       </div>
 

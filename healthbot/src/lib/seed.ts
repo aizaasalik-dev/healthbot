@@ -100,4 +100,5 @@ export const DEFAULT_STORE: Omit<AppStore, 'activeFam' | 'apiKey'> = {
   prescriptions: SEED_PRESCRIPTIONS,
   mrNumbers: SEED_MR_NUMBERS,
   medDosesTaken: {},
+  medReminders: {},
 }

@@ -13,13 +13,12 @@ export function FamilySwitcher({ onAddMember }: Props) {
   const families = useStore(s => s.families)
   const setActiveFam = useStore(s => s.setActiveFam)
 
-  const LABEL_MAP: Record<string, string> = { main: 'Me', abbu: 'Abbu', ami: 'Ami ji' }
-
   return (
     <div className="frow">
       {Object.entries(families).map(([key, fam]) => {
         const inits = initials(fam.profile.name)
-        const label = LABEL_MAP[key] ?? fam.profile.name.split(' ')[0]
+        const firstWord = fam.profile.name.trim().split(/\s+/)[0] || 'Member'
+        const label = key === 'main' ? 'Me' : firstWord
         const colorClass = getFamilyColor(key)
         return (
           <div key={key} className="fchip" onClick={() => setActiveFam(key)}>

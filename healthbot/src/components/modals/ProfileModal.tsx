@@ -67,8 +67,8 @@ export function ProfileModal({ mode, onClose }: Props) {
         <Field label="Relationship">
           <Select value={relation} onChange={e => setRelation(e.target.value)}>
             <option value="self">Myself</option>
-            <option value="father">Father (Abbu)</option>
-            <option value="mother">Mother (Ami ji)</option>
+            <option value="father">Father</option>
+            <option value="mother">Mother</option>
             <option value="spouse">Spouse</option>
             <option value="sibling">Sibling</option>
             <option value="child">Child</option>

@@ -48,6 +48,17 @@ interface Actions {
 
 type Store = AppStore & Actions
 
+function neutralizeLegacySeedName(key: string, name: string): string {
+  const n = (name || '').trim()
+  if (!n) return key === 'main' ? 'Your Name' : 'Family Member'
+
+  if (/^aiza salik$/i.test(n)) return 'Your Name'
+  if (/abbu|tariq salik/i.test(n)) return 'Family Member 1'
+  if (/ami|sabina salik/i.test(n)) return 'Family Member 2'
+
+  return n
+}
+
 export const useStore = create<Store>()(
   persist(
     (set, get) => ({
@@ -181,6 +192,25 @@ export const useStore = create<Store>()(
     }),
     {
       name: 'healthbot-v3',
+      version: 1,
+      migrate: (persistedState: any) => {
+        if (!persistedState || typeof persistedState !== 'object') return persistedState
+        if (!persistedState.families || typeof persistedState.families !== 'object') return persistedState
+
+        const nextFamilies = { ...persistedState.families }
+        Object.entries(nextFamilies).forEach(([key, fam]: any) => {
+          if (!fam?.profile) return
+          nextFamilies[key] = {
+            ...fam,
+            profile: {
+              ...fam.profile,
+              name: neutralizeLegacySeedName(key, fam.profile.name ?? ''),
+            },
+          }
+        })
+
+        return { ...persistedState, families: nextFamilies }
+      },
       // Only persist data, not derived functions
       partialize: (s) => ({
         families: s.families,

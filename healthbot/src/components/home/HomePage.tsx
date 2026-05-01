@@ -53,7 +53,7 @@ export function HomePage({ navigate, openAdd }: PageProps) {
         <div className="alert" style={{ marginTop: 0 }}>
           <span className="alert-icon">⚠️</span>
           <span className="alert-text">
-            <strong>Reminder:</strong> Abu&apos;s follow-up with Dr Nadia is tomorrow. BP medicine refill also due.
+            <strong>Reminder:</strong> A family member&apos;s follow-up is tomorrow. Medicine refill is also due.
           </span>
         </div>
 
